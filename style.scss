@@ -1,0 +1,532 @@
+@use '../mainStyles' as *;
+
+@include main2;
+
+$textColor: #b0b3b8;
+$purple: #ac539c;
+
+*:not(.title)::selection{
+    background:#ac539c;
+    color: #fff;
+}
+
+body{
+    font-family: var(--fontFamilyPoppins);
+    padding-top: 5vh;
+    padding-top: 5dvh;
+    background: #f3f5f6;
+}
+
+@keyframes bodyAnimation {
+    from{
+        background-position: 0 100%;
+    }
+
+    to{
+        background-position: 100% 100%;
+    }
+}
+
+
+
+.clipBoard{
+    width: 14rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -7rem;
+    z-index: 10;
+
+    text-align: center;
+
+    font-weight: bold;
+    color: var(--white);
+    padding: 1.7rem 0;
+    border-radius: 0 0 1rem 1rem;
+    background: $purple;
+
+    transition: all 0.5s ease-in-out;
+
+
+    &.active-clipBoard{
+        top: 0;
+    }
+}
+
+
+
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+
+
+
+header{
+    position: relative;
+}
+
+.volume{
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    
+    & > *{
+        cursor: pointer;
+        font-size: 1.1rem;
+    }
+
+    .fa-volume-high{
+        color: $purple;
+    }
+
+    .fa-volume-xmark{
+        color: red;
+        display: none;
+    }
+
+
+
+    &.off{
+        .fa-volume-high{
+            color: $purple;
+            display: none;
+        }
+    
+        .fa-volume-xmark{
+            display: block;
+            color: red;
+        }
+    }
+}
+
+
+
+.container{
+    background: #fff;
+
+    width: 100%;
+    max-width: 44rem;
+    // height: 30rem;
+
+    border-radius: 1rem;
+    margin-inline: auto;
+
+    box-shadow: 0 5px 0 rgba(#d4d6dc, 1);
+
+    padding-inline: 1.6rem;
+    padding-top: 1rem;
+
+    overflow: hidden;
+
+    transform: scale(0.3) translateY(6rem);
+    opacity: 0;
+    animation: containerPopUp 0.7s ease-in-out 0s forwards;
+}
+
+@keyframes containerPopUp {
+    to{
+        transform: scale(1) translateY(0rem);
+        opacity: 1;
+    }
+}
+
+
+.title{
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.8rem;
+
+    background-image: linear-gradient(35deg, #12c2e9, #c471ed, #f64f58);
+    background-position: center;
+    animation: bodyAnimation 5s ease 0s infinite alternate;
+    background-size: 200% 200%;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-block: 1.5rem;
+
+    &-block{
+
+        &:first-child{
+            color: #9ba0a7;
+        }
+
+
+        .clear-completed{
+            user-select: none;
+            pointer-events: none;
+            opacity: 0;
+
+            transition: all 0.3s;
+            border: none;
+            background: #f3f3f7;
+            color: $textColor;
+
+            font-size: 0.8rem;
+            padding: 0.2rem 0.3rem;
+            border-radius: 0.3rem;
+
+            cursor: pointer;
+            transform: translateY(-3px);
+            box-shadow: 0 3px 0 0 #9ba0a7;
+
+            &:hover,
+            &:focus{
+                transform: translateY(-1px);
+                box-shadow: 0 1px 0 0 #9ba0a7;
+            }
+
+            &.shown-button{
+                user-select: initial;
+                pointer-events: initial;
+                opacity: 1;
+            }
+        }
+    }
+}
+
+
+
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+
+
+form{
+    width: 100%;
+    position: relative;
+
+    margin-bottom: 2.1rem;
+
+    & > *{
+        transition: all 0.4s;
+    }
+
+    label{
+        color: $textColor;
+
+        user-select: none;
+        pointer-events: none;
+
+        position: absolute;
+        top: 50%;
+        left: 5%;
+        transform: translateY(-50%);
+        background: transparent;
+        
+        
+        &.active-label{
+            font-weight: 600;
+            top: 0;
+            background: #fff;
+            padding: 2px 10px;
+            border-radius: 100vmax;
+            color: $purple;
+        }
+    }
+
+    input{
+        width: 100%;
+        border: 2px solid #eee;
+        border-radius: 0.4rem;
+        height: 2.8rem;
+        padding-inline: 5% 12%;
+        font-size: 1.1rem;
+
+        &:focus{
+            border: 2px solid $purple;
+            box-shadow: 0 0 0 2px rgba($purple, 0.3);
+
+
+            & ~ label{
+                font-weight: 600;
+                top: 0;
+                background: #fff;
+                padding: 2px 10px;
+                border-radius: 100vmax;
+                color: $purple;
+            }
+        }
+    }
+
+
+    button{
+        position: absolute;
+        top: 50%;
+        right: 4%;
+        transform: translateY(-50%);
+        border: none;
+        background: transparent;
+        color: $textColor;
+        font-size: 0.9em;
+        cursor: pointer;
+
+        &:focus,
+        &:hover{
+            color: var(--black);
+        }
+    }
+}
+
+
+
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+
+
+.tasks{
+    list-style: none;
+    transition: transform 0.6s ease-in-out;
+
+    &.deleted-tasks{
+        transform: translateX(-140%);
+        opacity: 0.6;
+    }
+
+
+
+    .task{
+        max-width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-block: 0.8rem;
+        font-weight: 600;
+        color: var(--black);
+        margin-bottom: 1rem;
+
+        box-shadow: inset 0 3px 2px 1px transparent;
+
+        transition: transform 0.5s ease-in, opacity 0.5s, box-shadow 0.3s;
+
+
+        &.selected{
+            box-shadow: inset 0 3px 2px 1px rgba(black, .3);
+
+            .task-block:last-child{
+                display: none;
+            }
+        }
+
+        &.deleted-task{
+            opacity: 0.3;
+            transform: translateX(-120%);
+        }
+
+        &.deleted-task-right{
+            opacity: 0.3;
+            transform: translateX(120%);
+        }
+
+        .completed-task{
+            text-decoration: line-through;
+            text-decoration-thickness: 2px;
+            text-decoration-color: $purple;
+            color: $textColor;
+        }
+
+        &-block{
+            display: flex;
+            gap: 1rem;
+            position: relative;
+
+
+
+            input[type = 'checkbox']{
+                margin-block: auto;
+                position: relative;
+                cursor: pointer;
+                appearance: none;
+                flex-shrink: 0;
+                width: 1.2rem;
+                height: 1.2rem;
+
+                border-radius: 5px;
+                border: 2px solid $textColor;
+                
+                &:hover{
+                    border: 2px solid $purple;
+                }
+
+                &::after{
+                    content: '';
+                    pointer-events: none;
+                    user-select: none;
+
+                    position: absolute;
+                    top: 60%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    font-family: "Font Awesome 5 Free";
+                    font-size: 0.8rem;
+                    font-weight: 900;
+                    color: #fff;
+                }
+
+                &:checked{
+                    border: 2px solid $purple;
+                    background: $purple;
+
+                    &::after{
+                        content: '\f00c';
+                    }
+                }
+            }
+
+            .task-name,
+            .update-task{
+                overflow: hidden;
+                width: 100%;
+                width: 30rem;
+                max-width: 35rem;
+                border: none;
+                outline: none;
+            }
+
+            .task-name{
+                text-overflow: ellipsis; /* Show an ellipsis (...) when text overflows */
+                white-space: nowrap;
+                // text-transform: capitalize;
+                
+                &.expanded{
+                    white-space: normal;
+                    word-break: break-all;
+                }
+            }
+
+
+
+            &:last-child{
+                transition: opacity 0.3s;
+                opacity: 0.5;
+                font-size: 1.1rem;
+
+                & > *{
+                    cursor: pointer;
+                    opacity: 0.5;
+                    transition: opacity 0.3s;
+
+                    &:hover{
+                        opacity: 1;
+                    }
+                }
+
+                .fa-copy{
+                    color: $textColor;
+                }
+                .fa-trash{
+                    color: rgb(226, 9, 9);
+                }
+            }
+        }
+
+        &::after{
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+
+            width: 100%;
+            height: 2px;
+            background: #ac539c;
+            opacity: 0.4;
+
+            transform: scaleX(1.2);
+        }
+
+
+
+        &:hover{
+            .task-block:last-child{
+                opacity: 1;
+            }
+        }
+    }
+}
+
+
+
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+
+.delete-all{
+    cursor: pointer;
+    width: 100%;
+    background: $purple;
+    border: 2px solid transparent;
+    color: var(--white);
+    font-size: 1.1rem;
+    font-family: 600;
+    border-radius: 0.7rem 0.7rem 0 0;
+
+    transform: translateY(110%);
+
+    transition: all 0.3s;
+    opacity: 0;
+
+    padding-block: 0.1rem;
+
+    &.delete-all-shown{
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    &:focus,
+    &:hover{
+        border: 2px solid $purple;
+        background: #fff;
+        color: $purple;
+    }
+}
+
+
+
+
+@media (width <= 700px) {
+    .tasks .task-block, .task-name{
+        max-width: 30rem;
+    }
+}
+
+@media (width <= 590px) {
+    .tasks .task-block, .task-name{
+        max-width: 24rem;
+    }
+}
+
+@media (width <= 490px) {
+    .tasks .task-block, .task-name{
+        max-width: 16rem;
+    }
+
+    form input{
+        padding-right: 4rem; 
+    }
+}
+
+@media (width <= 360px) {
+    .tasks .task-block, .task-name{
+        max-width: 13rem;
+    }
+}
+
+@media (width <= 310px) {
+    .tasks .task-block, .task-name{
+        max-width: 10rem;
+    }
+}
