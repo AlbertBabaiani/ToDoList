@@ -260,7 +260,7 @@ form label.active-label {
   font-weight: 600;
   top: 0;
   background: #fff;
-  padding: 0px 10px;
+  padding: 0 10px;
   border-radius: 100vmax;
   color: #ac539c;
 }
