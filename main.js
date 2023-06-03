@@ -252,17 +252,25 @@ function deleteAllShow(){
 
 
 function deleteAll(){
-    DeltetionAudio();   
-    toDos = [];
-    saveToLocalStorage();
-    ul.classList.add('deleted-tasks');
-    
-    setTimeout(function(){
-        ul.classList.remove('deleted-tasks');
-        showTasks();
-        deleteAllShow();
-    }, 600);
+    if(window.confirm(`Do you want to delete all tasks?`)){
+        DeltetionAudio();   
+        toDos = [];
+        saveToLocalStorage();
+        ul.classList.add('deleted-tasks');
+        
+        setTimeout(function(){
+            ul.classList.remove('deleted-tasks');
+            showTasks();
+            deleteAllShow();
+        }, 600);
+    }
 
+
+    let focusedElement = document.activeElement;
+    
+    if (focusedElement && focusedElement.tagName === 'BUTTON') {
+    focusedElement.blur();
+    }
     
 }
 
